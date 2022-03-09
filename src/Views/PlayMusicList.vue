@@ -240,6 +240,7 @@ export default {
       } else {
         // 总个数
         this.total = res.total;
+        
         // 评论数据
         this.comments = res.comments;
       }
