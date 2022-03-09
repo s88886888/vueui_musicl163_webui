@@ -59,17 +59,38 @@
           </el-table-column>
 
           <el-table-column prop="" label="功能" width="120">
-            
-            <template slot-scope="scope" >
-              <i
-                class="el-icon-video-play"
+            <template slot-scope="scope">
+              <!-- <i
+                :class="
+                  scope.row.id == nowplay
+                    ? (playStatus = 'el-icon-video-pause')
+                    : (playStatus = 'el-icon-video-play')
+                "
                 style="font-size: 30px"
                 @click="playMusic(scope.row.id)"
+              ></i> -->
+
+              <i
+                class="el-icon-video-play"
+                style="font-size: 22px"
+                @click="playMusic(scope.row.id)"
               ></i>
-              <i class="el-icon-star-off" style="font-size: 30px"  @click="LikeMusic(scope.row.id)"></i>
+
+              <i
+                class="el-icon-video-pause"
+                style="font-size: 22px"
+                @click="audioPause()"
+              ></i>
+
+              <i
+                class="el-icon-star-off"
+                style="font-size: 22px"
+                @click="LikeMusic(scope.row.id)"
+              ></i>
               <i
                 class="el-icon-circle-plus-outline"
-                style="font-size: 30px"  @click="MoreMusic(scope.row.id)"
+                style="font-size: 22px"
+                @click="MoreMusic(scope.row.id)"
               ></i>
             </template>
           </el-table-column>
@@ -150,6 +171,7 @@
 
 <script>
 import moment from "moment";
+
 export default {
   //时间戳过滤器
   filters: {
@@ -182,8 +204,9 @@ export default {
       // 普通评论
       comments: [],
 
-      // pauseUI:'el-icon-video-pause',
-      // playUI:'el-icon-video-play'
+      // playStatus: "play",
+      // nowplay: "",
+      //  boolui: false,
     };
   },
 
@@ -206,7 +229,6 @@ export default {
           "error:获取歌单详细失败了，请检查版权...网络404 "
         );
       } else {
-        console.log(res);
         this.playlist = res.playlist;
         this.creator = res.playlist.creator;
         this.tracks = res.playlist.tracks;
@@ -240,7 +262,7 @@ export default {
       } else {
         // 总个数
         this.total = res.total;
-        
+
         // 评论数据
         this.comments = res.comments;
       }
@@ -256,22 +278,22 @@ export default {
         let url = res.data[0].url;
         // 设置给父组件的 播放地址
         this.$parent.musicUrl = url;
+         this.$parent.audioPlay();
+        // this.nowplay = res.data[0].id;
         return this.$message.warning(
           "warning:由于网易云安全限制！如果想获取歌单的所有音乐，请先登录"
         );
-      
       }
     },
-
-    LikeMusic(){
-       return this.$message.warning(
-          "warning:该功能未实现，仅提供音乐试听"
-        );
+    //暂停播放
+    async audioPause() {
+      await this.$parent.audioPause();
     },
-    MoreMusic(){
-       return this.$message.warning(
-          "warning:该功能未实现，仅提供音乐试听"
-        );
+    LikeMusic() {
+      return this.$message.warning("warning:该功能待更新，仅提供音乐试听");
+    },
+    MoreMusic() {
+      return this.$message.warning("warning:该功能待更新，仅提供音乐试听");
     },
     //获取页码
     async handleCurrentChange(val) {

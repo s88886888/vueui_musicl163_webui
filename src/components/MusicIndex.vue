@@ -36,18 +36,40 @@
     <!-- 播放标签 -->
     <div class="player">
       <!-- autoplay 自动播放 -->
-      <audio :src="musicUrl" controls autoplay></audio>
+      <audio
+        :src="musicUrl"
+        ref="audioDom"
+        controls
+        autoplay
+        currentTime="10"
+      ></audio>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-
   data() {
     return {
       musicUrl: "",
+      audiostart: false,
     };
+  },
+  methods: {
+    //暂停
+    audioPause() {
+      this.$refs.audioDom.pause();
+    },
+    //播放
+    audioPlay() {
+      this.$refs.audioDom.play();
+    },
+    //播放状态
+    audiopaused() {
+
+        this.$refs.audioDom.paused()
+        
+    },
   },
 };
 </script>
