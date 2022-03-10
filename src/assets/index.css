@@ -5,7 +5,7 @@ html {
   padding: 0;
   font-weight: 400;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
- Microsoft YaHei, '\5FAE\8F6F\96C5\9ED1', Arial, sans-serif;
+    Microsoft YaHei, '\5FAE\8F6F\96C5\9ED1', Arial, sans-serif;
 }
 
 * {
@@ -26,6 +26,7 @@ ol {
 
 .iconfont {
   cursor: pointer;
+
 }
 
 .el-tabs__active-bar {
@@ -37,7 +38,7 @@ ol {
   color: #c3473a;
 }
 
-.el-table th > .cell {
+.el-table th>.cell {
   font-weight: normal;
   color: black;
 }
@@ -96,7 +97,7 @@ ol {
   width: 200px;
 }
 
-.el-table .song-wrap > span {
+.el-table .song-wrap>span {
   margin-top: 20px;
   display: inline-block;
   color: #bebebe;
@@ -342,7 +343,7 @@ ol {
   position: relative;
 }
 
-.discovery-container .mvs .items .item .img-wrap > .icon-play {
+.discovery-container .mvs .items .item .img-wrap>.icon-play {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -359,11 +360,11 @@ ol {
   opacity: 0;
 }
 
-.discovery-container .mvs .items .item .img-wrap > .icon-play::before {
+.discovery-container .mvs .items .item .img-wrap>.icon-play::before {
   transform: translateX(3px);
 }
 
-.discovery-container .mvs .items .item .img-wrap:hover > .icon-play {
+.discovery-container .mvs .items .item .img-wrap:hover>.icon-play {
   opacity: 1;
 }
 
@@ -553,7 +554,7 @@ ol {
   margin-right: 10px;
 }
 
-.mv-container .mv-recommend .mvs .items .item .img-wrap > .icon-play {
+.mv-container .mv-recommend .mvs .items .item .img-wrap>.icon-play {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -570,11 +571,11 @@ ol {
   opacity: 0;
 }
 
-.mv-container .mv-recommend .mvs .items .item .img-wrap > .icon-play::before {
+.mv-container .mv-recommend .mvs .items .item .img-wrap>.icon-play::before {
   transform: translateX(3px);
 }
 
-.mv-container .mv-recommend .mvs .items .item .img-wrap:hover > .icon-play {
+.mv-container .mv-recommend .mvs .items .item .img-wrap:hover>.icon-play {
   opacity: 1;
 }
 
@@ -627,40 +628,40 @@ ol {
   padding-top: 20px;
 }
 
-.mvs-container .filter-wrap > div {
+.mvs-container .filter-wrap>div {
   margin-bottom: 30px;
   vertical-align: baseline;
   display: flex;
   align-items: center;
 }
 
-.mvs-container .filter-wrap > div span {
+.mvs-container .filter-wrap>div span {
   font-size: 14px;
   height: 100%;
 }
 
-.mvs-container .filter-wrap > div span.title {
+.mvs-container .filter-wrap>div span.title {
   margin: 20px;
   color: gray;
   cursor: pointer;
   padding: 5px 20px;
 }
 
-.mvs-container .filter-wrap > div span.title.active {
+.mvs-container .filter-wrap>div span.title.active {
   color: #dd6d60;
   background-color: #fcf6f5;
   border-radius: 20px;
 }
 
-.mvs-container .filter-wrap > div span.title::before {
+.mvs-container .filter-wrap>div span.title::before {
   content: '', pos;
 }
 
-.mvs-container .filter-wrap > div ul {
+.mvs-container .filter-wrap>div ul {
   display: flex;
 }
 
-.mvs-container .filter-wrap > div ul li:not(:last-child) {
+.mvs-container .filter-wrap>div ul li:not(:last-child) {
   border-right: 1px solid #f2f2f1;
 }
 
@@ -1091,7 +1092,7 @@ ol {
   position: relative;
 }
 
-.result-container .items .item .img-wrap > .icon-play {
+.result-container .items .item .img-wrap>.icon-play {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1108,11 +1109,11 @@ ol {
   opacity: 0;
 }
 
-.result-container .items .item .img-wrap > .icon-play::before {
+.result-container .items .item .img-wrap>.icon-play::before {
   transform: translateX(3px);
 }
 
-.result-container .items .item .img-wrap:hover > .icon-play {
+.result-container .items .item .img-wrap:hover>.icon-play {
   opacity: 1;
 }
 
@@ -1183,7 +1184,7 @@ ol {
   color: #dd6d60;
 }
 
-.songs-container .song-table .song-wrap > span {
+.songs-container .song-table .song-wrap>span {
   margin-top: 20px;
   display: inline-block;
   color: #bebebe;
@@ -1275,7 +1276,7 @@ ol {
   padding: 10px 20px;
 }
 
-.index-container .main > div {
+.index-container .main>div {
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -1287,6 +1288,7 @@ ol {
   bottom: 0;
   left: 0;
   width: 100%;
+  margin: 5px;
 }
 
 .index-container audio {
@@ -1392,10 +1394,23 @@ ol {
   padding-top: 60px;
   padding-bottom: 60px;
 }
-.el-icon-right{
+
+.el-icon-right {
   margin-top: 2px;
 }
-.itemset{
+
+.itemset {
   text-align: right;
   margin-bottom: 20px;
+}
+
+.player_box {
+  width: 165px;
+  height: 18px;
+  position: absolute;
+  z-index: 1;
+  font-size: 12px;
+  text-align: center;
+
+
 }
