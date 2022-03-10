@@ -63,7 +63,7 @@
         <div class="comments-wrap">
           <div class="item" v-for="(item, index) in comments" :key="index">
             <div class="icon-wrap">
-              <img :src="item.user.avatarUrl" alt="" />
+              <img :src="item.user.avatarUrl"   alt=""/>
             </div>
             <div class="content-wrap">
               <div class="content">
@@ -219,6 +219,7 @@ export default {
         this.hotComments = res.hotComments;
         this.hotCount = res.total;
         this.total = res.total;
+        console.log(res);
       }
     },
 
