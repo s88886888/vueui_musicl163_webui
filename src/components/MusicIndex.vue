@@ -34,14 +34,19 @@
       <router-view></router-view>
     </div>
     <!-- 播放标签 -->
+
     <div class="player">
       <!-- autoplay 自动播放 -->
+      <div class="player_box">
+        <!-- <span><i class="el-icon-video-play"></i> {{singsong}}</span> -->
+        <span>{{ singsong }}</span>
+      </div>
       <audio
         :src="musicUrl"
         ref="audioDom"
-        controls
-        autoplay
-        currentTime="10"
+        controls="controls"
+        autoplay="autoplay"
+        paused
       ></audio>
     </div>
   </div>
@@ -52,7 +57,7 @@ export default {
   data() {
     return {
       musicUrl: "",
-      audiostart: false,
+      singsong: "",
     };
   },
   methods: {
@@ -64,11 +69,12 @@ export default {
     audioPlay() {
       this.$refs.audioDom.play();
     },
-    //播放状态
-    audiopaused() {
-
-        this.$refs.audioDom.paused()
-        
+    audioSrc(value) {
+      // this.$refs.audioDom.src = value;
+      this.musicUrl = value;
+    },
+    audioSong(value) {
+      this.singsong = value;
     },
   },
 };

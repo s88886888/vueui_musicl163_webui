@@ -4,9 +4,11 @@
     <el-carousel class="" :interval="4000" type="card">
       <!-- 循环获取到的接口数据 -->
       <el-carousel-item v-for="(item, index) in banners" :key="index">
-
-        <a   target="_blank" :href="item.url ==null? 'https://gitee.com/S88888888':item.url"><img :src="item.imageUrl" alt="推荐广告信息" /></a>
-        
+        <a
+          target="_blank"
+          :href="item.url == null ? 'https://gitee.com/S88888888' : item.url"
+          ><img :src="item.imageUrl" alt="推荐广告信息"
+        /></a>
       </el-carousel-item>
     </el-carousel>
     <!-- 推荐歌单 -->
@@ -18,11 +20,10 @@
             <div class="desc-wrap">
               <span class="desc">{{ item.copywriter }}</span>
             </div>
-            <img :src="item.picUrl" alt="" />
-            <span
-              class="iconfont icon-play"
-              @click="playmusiclist(item.id)"
-            ></span>
+            <img :src="item.picUrl" alt="" @click="playmusiclist(item.id)" />
+              <span class="iconfont icon-play" @click="playmusiclist(item.id)">
+                <i class="el-icon-video-play"></i>
+              </span>
           </div>
           <p class="name">{{ item.name }}</p>
         </div>
@@ -41,7 +42,7 @@
           <div class="img-wrap">
             <!-- 封面 -->
             <img :src="item.picUrl" alt="" />
-            <span @click="playMusic(item.id)" class="iconfont icon-play"></span>
+            <span @click="playMusic(item.id)" class="iconfont icon-play">  <i class="el-icon-video-play"></i></span>
           </div>
           <div class="song-wrap">
             <!-- 歌名 -->
@@ -59,7 +60,7 @@
         <div class="item" v-for="(item, index) in mvs" :key="index">
           <div class="img-wrap">
             <img :src="item.picUrl" alt="" />
-            <span class="iconfont icon-play"></span>
+            <span class="iconfont icon-play">  <i class="el-icon-video-play"></i></span>
             <div class="num-wrap">
               <div class="iconfont icon-play"></div>
               <!-- 播放次数 -->

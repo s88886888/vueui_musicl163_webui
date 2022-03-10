@@ -73,7 +73,7 @@
               <i
                 class="el-icon-video-play"
                 style="font-size: 22px"
-                @click="playMusic(scope.row.id)"
+                @click="playMusic(scope.row.id, scope.row.name)"
               ></i>
 
               <i
@@ -124,11 +124,12 @@
                   >
                   <span class="comment">{{ item.beReplied[0].content }}</span>
                 </div>
-                <div class="date">2020-02-12 17:26:11</div>
+                <div class="date">{{ item.time | filterDatas }}</div>
               </div>
             </div>
           </div>
         </div>
+
         <!-- 最新评论 -->
         <div class="comment-wrap">
           <p class="title">
@@ -151,7 +152,7 @@
                   >
                   <span class="comment">{{ item.beReplied[0].content }}</span>
                 </div>
-                <div class="date">2020-02-12 17:26:11</div>
+                <div class="date">{{ item.time | filterDatas }}</div>
               </div>
             </div>
           </div>
@@ -268,7 +269,7 @@ export default {
       }
     },
     //播放音乐
-    async playMusic(id) {
+    async playMusic(id, name = null) {
       const { data: res } = await this.$http.get("/song/url?id=" + id);
       if (res.code !== 200) {
         return this.$message.error(
@@ -276,13 +277,13 @@ export default {
         );
       } else {
         let url = res.data[0].url;
+
         // 设置给父组件的 播放地址
-        this.$parent.musicUrl = url;
-         this.$parent.audioPlay();
+        // this.$parent.musicUrl = url;
+        this.$parent.audioSrc(url);
+        this.$parent.audioSong(name);
+        this.$parent.audioPlay();
         // this.nowplay = res.data[0].id;
-        return this.$message.warning(
-          "warning:由于网易云安全限制！如果想获取歌单的所有音乐，请先登录"
-        );
       }
     },
     //暂停播放
