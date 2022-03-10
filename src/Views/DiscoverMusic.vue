@@ -21,9 +21,9 @@
               <span class="desc">{{ item.copywriter }}</span>
             </div>
             <img :src="item.picUrl" alt="" @click="playmusiclist(item.id)" />
-              <span class="iconfont icon-play" @click="playmusiclist(item.id)">
-                <i class="el-icon-video-play"></i>
-              </span>
+            <span class="iconfont icon-play" @click="playmusiclist(item.id)">
+              <i class="el-icon-video-play"></i>
+            </span>
           </div>
           <p class="name">{{ item.name }}</p>
         </div>
@@ -42,7 +42,9 @@
           <div class="img-wrap">
             <!-- 封面 -->
             <img :src="item.picUrl" alt="" />
-            <span @click="playMusic(item.id)" class="iconfont icon-play">  <i class="el-icon-video-play"></i></span>
+            <span @click="playMusic(item.id)" class="iconfont icon-play">
+              <i class="el-icon-video-play"></i
+            ></span>
           </div>
           <div class="song-wrap">
             <!-- 歌名 -->
@@ -59,14 +61,21 @@
       <div class="items">
         <div class="item" v-for="(item, index) in mvs" :key="index">
           <div class="img-wrap">
-            <img :src="item.picUrl" alt="" />
-            <span class="iconfont icon-play">  <i class="el-icon-video-play"></i></span>
+            <img
+              :src="item.picUrl"
+              alt="MV图片"
+              @click="playMusicMv(item.id)"
+            />
+            <span class="iconfont icon-play"
+              ><i class="el-icon-video-play" @click="playMusicMv(item.id)"></i
+            ></span>
             <div class="num-wrap">
               <div class="iconfont icon-play"></div>
               <!-- 播放次数 -->
               <div class="num">{{ item.playCount }}</div>
             </div>
           </div>
+
           <div class="info-wrap">
             <!-- mv名 -->
             <div class="name">{{ item.name }}</div>
@@ -153,13 +162,26 @@ export default {
         this.$parent.musicUrl = url;
       }
     },
-    playmusiclist(id) {
+    //跳转去MV页面时间
+    async playMusicMv(id) {
       if (id == "") {
-        // 提示用户
-        this.$message.warning("请输入内容");
+        return await this.$message.error(
+          "error:获取MV失败，请检查版权...或者网络 "
+        );
       } else {
         // 去搜索页 携带数据
-        this.$router.push("/PlayMusicList?q=" + id);
+        await this.$router.push("/PkayMusicMV?q=" + id);
+      }
+    },
+    //跳转去歌单页面时间
+    async playmusiclist(id) {
+      if (id == "") {
+        return await this.$message.error(
+          "error:获取歌单失败，请检查版权...或者网络 "
+        );
+      } else {
+        // 去搜索页 携带数据
+        await this.$router.push("/PlayMusicList?q=" + id);
       }
     },
   },

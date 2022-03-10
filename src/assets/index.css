@@ -434,7 +434,8 @@ ol {
 .mv-container .mv-wrap .video-wrap video {
   border-radius: 5px;
   height: 100%;
-  width: 100%;
+  /* 不能给100 会有黑边 */
+  width: 99%;
   outline: none;
 }
 

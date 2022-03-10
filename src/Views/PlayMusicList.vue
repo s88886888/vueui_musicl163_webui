@@ -172,7 +172,6 @@
 
 <script>
 import moment from "moment";
-
 export default {
   //时间戳过滤器
   filters: {

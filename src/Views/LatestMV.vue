@@ -150,7 +150,7 @@
       <div class="items">
         <div class="item" v-for="(item, index) in list" :key="index">
           <div class="img-wrap">
-            <img :src="item.cover" alt="" />
+            <img :src="item.cover" alt="" @click="playMusicMv(item.id)" />
             <div class="num-wrap">
               <div class="iconfont icon-play"></div>
               <div class="num">{{ item.playCount }}</div>
@@ -187,77 +187,91 @@ export default {
       // 页容量
       limit: 8,
       // 地区
-      area: '全部',
+      area: "全部",
       // 类型
-      type: '全部',
+      type: "全部",
       // 排序
-      order: '上升最快',
+      order: "上升最快",
       // 查询的结果
-      list: []
-    }
+      list: [],
+    };
   },
   // 侦听器
   watch: {
     area() {
       // 返回第一页
-      this.page = 1
+      this.page = 1;
       // 获取数据
-      this.getList()
+      this.getList();
     },
     type() {
       // 返回第一页
-      this.page = 1
+      this.page = 1;
       // 获取数据
-      this.getList()
+      this.getList();
     },
     order() {
       // 返回第一页
-      this.page = 1
+      this.page = 1;
       // 获取数据
-      this.getList()
-    }
+      this.getList();
+    },
   },
   created() {
     // 获取数据
-    this.getList()
+    this.getList();
   },
   methods: {
     // 获取列表数据
-   async getList() {
-
-        const { data: res } = await this.$http.get("/mv/all?area=" + this.area+"&type="+this.type+"&order="+this.order+"&limit="+this.limit+"&offset="+(this.page - 1) * this.limit);
-    if (res.code !== 200) {
-      return this.$message.error("error:音乐数据失败 ");
-    } else {
-
-        this.list = res.data
+    async getList() {
+      const { data: res } = await this.$http.get(
+        "/mv/all?area=" +
+          this.area +
+          "&type=" +
+          this.type +
+          "&order=" +
+          this.order +
+          "&limit=" +
+          this.limit +
+          "&offset=" +
+          (this.page - 1) * this.limit
+      );
+      if (res.code !== 200) {
+        return this.$message.error("error:音乐数据失败 ");
+      } else {
+        this.list = res.data;
         // 处理次数
         for (let i = 0; i < this.list.length; i++) {
           if (this.list[i].playCount > 100000) {
             this.list[i].playCount =
-              parseInt(this.list[i].playCount / 10000) + '万'
+              parseInt(this.list[i].playCount / 10000) + "万";
           }
         }
         // 保存总条数
         // 接口问题 有count 就赋值
         if (res.data.count) {
-          this.total = res.count
+          this.total = res.count;
         }
-    }
-    // 页码改变的回调函数
-   
-  },
-   async handleCurrentChange(val) {
+      }
+      // 页码改变的回调函数
+    },
+    async handleCurrentChange(val) {
       // console.log(`当前页: ${val}`)
       // 保存页面 重新获取数据
-      this.page = val
-      this.getList()
-    }
-  }
-
-}
+      this.page = val;
+      this.getList();
+    },
+    //跳转去MV页面时间
+    async playMusicMv(id) {
+      if (id == "") {
+        return await  this.$message.error("error:获取MV失败，请检查版权...或者网络 ");
+      } else {
+        // 去搜索页 携带数据
+        await this.$router.push("/PkayMusicMV?q=" + id);
+      }
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

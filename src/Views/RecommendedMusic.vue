@@ -132,8 +132,8 @@
                 播放量:
                 <span class="num">{{ item.playCount }}</span>
               </div>
-              <img :src="item.coverImgUrl" alt="" />
-              <span class="iconfont icon-play"></span>
+              <img   :src="item.coverImgUrl" alt="" @click="playmusiclist(item.id)" />
+              <span class="iconfont icon-play" @click="playmusiclist(item.id)"><i class="el-icon-video-play"></i> </span>
             </div>
             <p class="name">{{ item.name }}</p>
           </div>
@@ -219,6 +219,17 @@ export default {
       this.page = val;
       // 重新获取数据
       this.listData();
+    },
+        //跳转去歌单页面时间
+    async playmusiclist(id) {
+      if (id == "") {
+        return this.$message.error(
+          "error:获取歌单失败，请检查版权...或者网络 "
+        );
+      } else {
+        // 去搜索页 携带数据
+        await this.$router.push("/PlayMusicList?q=" + id);
+      }
     },
   },
 };
