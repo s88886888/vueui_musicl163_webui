@@ -219,6 +219,7 @@ export default {
     this.commentplaylist();
   },
   methods: {
+    
     async playlisttrackall() {
       //从发现音乐的页面中 通过playMusic方法的this.$router传递，同时通过this.$router接收
       const { data: res } = await this.$http.get(
@@ -262,7 +263,6 @@ export default {
       } else {
         // 总个数
         this.total = res.total;
-
         // 评论数据
         this.comments = res.comments;
       }
@@ -276,7 +276,6 @@ export default {
         );
       } else {
         let url = res.data[0].url;
-
         // 设置给父组件的 播放地址
         // this.$parent.musicUrl = url;
         this.$parent.audioSrc(url);

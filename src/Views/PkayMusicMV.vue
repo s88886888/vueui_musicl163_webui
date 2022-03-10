@@ -19,7 +19,7 @@
         <div class="mv-info">
           <!-- 标题 -->
           <h2 class="title">{{ mvInfo.name }}</h2>
-          <span class="date">发布：2014-11-04</span>
+          <span class="date">发布：{{ mvInfo.time | filterDatas }}</span>
           <!-- 播放次数 -->
           <span class="number">播放：{{ mvInfo.playCount }}次</span>
           <!-- 描述 -->
@@ -30,76 +30,53 @@
       </div>
       <!-- 精彩评论 -->
       <div class="comment-wrap">
-        <p class="title">精彩评论<span class="number">(666)</span></p>
+        <p class="title">
+          精彩评论<span class="number">({{ hotCount }})</span>
+        </p>
+
         <div class="comments-wrap">
-          <div class="item">
+          <div class="item" v-for="(item, index) in hotComments" :key="index">
             <div class="icon-wrap">
-              <img src="../assets/avatar.jpg" alt="" />
+              <img :src="item.user.avatarUrl" alt="" />
             </div>
             <div class="content-wrap">
               <div class="content">
-                <span class="name">爱斯基摩：</span>
-                <span class="comment">谁说的，长大了依旧可爱哈</span>
+                <span class="name">{{ item.user.nickname }}：</span>
+                <span class="comment">{{ item.content }}</span>
               </div>
-              <div class="re-content">
-                <span class="name">小苹果：</span>
-                <span class="comment">还是小时候比较可爱</span>
+              <div class="re-content" v-if="item.beReplied.length != 0">
+                <span class="name"
+                  >{{ item.beReplied[0].user.nickname }}：</span
+                >
+                <span class="comment">{{ item.beReplied[0].content }}</span>
               </div>
-              <div class="date">2020-02-12 17:26:11</div>
+              <div class="date">{{ item.time | filterDatas }}</div>
             </div>
           </div>
         </div>
       </div>
       <!-- 最新评论 -->
       <div class="comment-wrap">
-        <p class="title">最新评论<span class="number">(666)</span></p>
+        <p class="title">
+          最新评论<span class="number">({{ total }})</span>
+        </p>
         <div class="comments-wrap">
-          <div class="item">
+          <div class="item" v-for="(item, index) in comments" :key="index">
             <div class="icon-wrap">
-              <img src="../assets/avatar.jpg" alt="" />
+              <img :src="item.user.avatarUrl" alt="" />
             </div>
             <div class="content-wrap">
               <div class="content">
-                <span class="name">爱斯基摩：</span>
-                <span class="comment">谁说的，长大了依旧可爱哈</span>
+                <span class="name">{{ item.user.nickname }}：</span>
+                <span class="comment">{{ item.content }}</span>
               </div>
-              <div class="re-content">
-                <span class="name">小苹果：</span>
-                <span class="comment">还是小时候比较可爱</span>
+              <div class="re-content" v-if="item.beReplied.length != 0">
+                <span class="name"
+                  >{{ item.beReplied[0].user.nickname }}：</span
+                >
+                <span class="comment">{{ item.beReplied[0].content }}</span>
               </div>
-              <div class="date">2020-02-12 17:26:11</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="icon-wrap">
-              <img src="../assets/avatar.jpg" alt="" />
-            </div>
-            <div class="content-wrap">
-              <div class="content">
-                <span class="name">爱斯基摩：</span>
-                <span class="comment">谁说的，长大了依旧可爱哈</span>
-              </div>
-              <div class="re-content">
-                <span class="name">小苹果：</span>
-                <span class="comment">还是小时候比较可爱</span>
-              </div>
-              <div class="date">2020-02-12 17:26:11</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="icon-wrap">
-              <img src="../assets/avatar.jpg" alt="" />
-            </div>
-            <div class="content-wrap">
-              <div class="content">
-                <span class="name">爱斯基摩：</span>
-                <span class="comment">谁说的，长大了依旧可爱哈</span>
-              </div>
-              <div class="re-content">
-                <span class="name">小苹果：</span>
-                <span class="comment">还是小时候比较可爱</span>
-              </div>
-              <div class="date">2020-02-12 17:26:11</div>
+              <div class="date">{{ item.time | filterDatas }}</div>
             </div>
           </div>
         </div>
@@ -133,8 +110,8 @@
               <span class="time">{{ item.duration }}</span>
             </div>
             <div class="info-wrap">
-              <div class="name">{{ item.name }}</div>
-              <div class="singer">{{ item.artistName }}</div>
+              <div class="name">{{ user.name }}</div>
+              <div class="singer">{{ user.artistName }}</div>
             </div>
           </div>
         </div>
@@ -144,10 +121,17 @@
 </template>
 
 <script>
-// 导入 axios
-import axios from "axios";
+import moment from "moment";
 export default {
-  name: "mv",
+  filters: {
+    filterDatas(value) {
+      if (value == 0) {
+        return "未获取到数据";
+      } else {
+        return moment(value).format("YYYY-MM-DD");
+      }
+    },
+  },
   data() {
     return {
       // 总条数
@@ -164,6 +148,14 @@ export default {
       mvInfo: {},
       // 头像
       icon: "",
+      //最新评论
+      comments: {},
+      //精彩评论
+      hotComments: {},
+      //用户信息
+      user: {},
+      total: 0,
+      hotCount: 0,
     };
   },
   created() {
@@ -175,26 +167,16 @@ export default {
     // 获取 mv的信息
     this.getmvdetail();
     // 获取评论数据
-    axios({
-      url: "https://autumnfish.cn/comment/mv",
-      method: "get",
-      params: {
-        id: this.$route.query.q,
-        limit: 10,
-        offset: 0,
-      },
-    }).then((res) => {
-      //   console.log(res);
-    });
+    this.getCommentmv();
   },
   methods: {
     // 获取mv播放地址
     async getMVUrl() {
       const { data: res } = await this.$http.get(
-        "mv/url?id=" + this.$route.query.q
+        "/mv/url?id=" + this.$route.query.q
       );
       if (res.code !== 200) {
-        return this.$message.error("error:获取页码失败 ");
+        return this.$message.error("error:获取失败 ");
       } else {
         this.url = res.data.url;
       }
@@ -203,10 +185,10 @@ export default {
     // 获取 相关的mv
     async getsimimv() {
       const { data: res } = await this.$http.get(
-        "simi/mv?mvid=" + this.$route.query.q
+        "/simi/mv?mvid=" + this.$route.query.q
       );
       if (res.code !== 200) {
-        return this.$message.error("error:获取页码失败 ");
+        return this.$message.error("error:获取失败 ");
       } else {
         this.simiMvs = res.mvs;
       }
@@ -214,10 +196,10 @@ export default {
 
     async getmvdetail() {
       const { data: res } = await this.$http.get(
-        "mv/detail?mvid=" + this.$route.query.q
+        "/mv/detail?mvid=" + this.$route.query.q
       );
       if (res.code !== 200) {
-        return this.$message.error("error:获取页码失败 ");
+        return this.$message.error("error:获取失败 ");
       } else {
         this.mvInfo = res.data;
         const { data: res1 } = await this.$http.get(
@@ -226,12 +208,21 @@ export default {
         this.icon = res1.artist.picUrl;
       }
     },
-
-    handleCurrentChange(val) {
-      this.page = val;
+    async getCommentmv() {
+      const { data: res } = await this.$http.get(
+        "/comment/mv?id=" + this.$route.query.q + "&method=10&offset=0"
+      );
+      if (res.code !== 200) {
+        return this.$message.error("error:获取视频评论失败 ");
+      } else {
+        this.comments = res.comments;
+        this.hotComments = res.hotComments;
+        this.hotCount = res.total;
+        this.total = res.total;
+      }
     },
 
-    //跳转去MV页面时间
+    //跳转去新MV页面数据
     async playMusicMv(id) {
       if (id == "") {
         return await this.$message.error(
@@ -241,6 +232,25 @@ export default {
         // 去搜索页 携带数据
         await this.$router.go(0);
         await this.$router.push("/PkayMusicMV?q=" + id);
+      }
+    },
+    //翻页事件
+    async handleCurrentChange(val) {
+      // 保存页码
+      this.page = val;
+      // 重新获取数据
+      const { data: res } = await this.$http.get(
+        "/comment/mv?id=" +
+          this.$route.query.q +
+          "&limit=10&offset=" +
+          (this.page - 1) * 10
+      );
+      if (res.code !== 200) {
+        return this.$message.error("error:获取页码失败请检查网络 ");
+      } else {
+        this.total = res.total;
+        // 评论数据
+        this.comments = res.comments;
       }
     },
   },
