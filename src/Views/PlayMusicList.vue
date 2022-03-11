@@ -71,12 +71,14 @@
               ></i> -->
 
               <i
+                v-if="isPay != scope.row.id"
                 class="el-icon-video-play"
                 style="font-size: 22px"
                 @click="playMusic(scope.row.id, scope.row.name)"
               ></i>
 
               <i
+                v-else
                 class="el-icon-video-pause"
                 style="font-size: 22px"
                 @click="audioPause()"
@@ -203,7 +205,8 @@ export default {
       hotCount: 0,
       // 普通评论
       comments: [],
-
+      //正在播放
+      isPay:null,
       // playStatus: "play",
       // nowplay: "",
       //  boolui: false,
@@ -269,6 +272,8 @@ export default {
     },
     //播放音乐
     async playMusic(id, name = null) {
+      this.isPay = id
+
       const { data: res } = await this.$http.get("/song/url?id=" + id);
       if (res.code !== 200) {
         return this.$message.error(
@@ -286,6 +291,7 @@ export default {
     },
     //暂停播放
     async audioPause() {
+      this.isPay = null
       await this.$parent.audioPause();
     },
     LikeMusic() {
