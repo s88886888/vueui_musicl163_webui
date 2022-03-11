@@ -47,7 +47,7 @@
           this.$message.warning('请输入内容')
         }else{
           // 去搜索页 携带数据
-          this.$router.push('/result?q='+this.inputValue)
+          this.$router.push('/searchMusic?q='+this.inputValue)
         }
       }
     }

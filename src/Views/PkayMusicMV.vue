@@ -21,7 +21,7 @@
           <h2 class="title">{{ mvInfo.name }}</h2>
           <span class="date">发布：{{ mvInfo.time | filterDatas }}</span>
           <!-- 播放次数 -->
-          <span class="number">播放：{{ mvInfo.playCount }}次</span>
+          <span class="number" style="font-size:5px" >播放：{{ mvInfo.playCount }}次</span>
           <!-- 描述 -->
           <p class="desc">
             {{ mvInfo.desc }}
@@ -105,13 +105,13 @@
               ></span>
               <div class="num-wrap">
                 <div class="iconfont icon-play"></div>
-                <div class="num">{{ item.playCount }}</div>
+                <div class="num" style="font-size:5px">播放:{{ item.playCount }}次</div>
               </div>
-              <span class="time">{{ item.duration }}</span>
+              <span class="time">{{ item.duration |filterDatatime}}</span>
             </div>
             <div class="info-wrap">
-              <div class="name">{{ user.name }}</div>
-              <div class="singer">{{ user.artistName }}</div>
+              <div class="name">{{ item.name }}</div>
+              <div class="singer">{{ item.artistName }}</div>
             </div>
           </div>
         </div>
@@ -129,6 +129,13 @@ export default {
         return "未获取到数据";
       } else {
         return moment(value).format("YYYY-MM-DD");
+      }
+    },
+    filterDatatime(value) {
+      if (value == 0) {
+        return "未获取到数据";
+      } else {
+        return moment(value).format("mm:ss");
       }
     },
   },

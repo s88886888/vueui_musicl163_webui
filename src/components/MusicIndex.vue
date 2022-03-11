@@ -45,6 +45,7 @@
         :src="musicUrl"
         ref="audioDom"
         controls="controls"
+        crossOrigin="anonymous"
         autoplay="autoplay"
         paused
       ></audio>

@@ -153,12 +153,13 @@
             <img :src="item.cover" alt="" @click="playMusicMv(item.id)" />
             <div class="num-wrap">
               <div class="iconfont icon-play"></div>
-              <div class="num">{{ item.playCount }}</div>
+              <div class="num">播放:{{ item.playCount }}次</div>
             </div>
           </div>
           <div class="info-wrap">
             <div class="name">{{ item.name }}</div>
             <div class="singer">{{ item.artistName }}</div>
+            <div class="mvs_time"><p> {{ item.duration | filterDatatime }}</p></div>
           </div>
         </div>
       </div>
@@ -177,7 +178,17 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
+  filters: {
+    filterDatatime(value) {
+      if (value == 0) {
+        return "未获取到数据";
+      } else {
+        return moment(value).format("mm:ss");
+      }
+    },
+  },
   data() {
     return {
       // 总条数
@@ -264,7 +275,9 @@ export default {
     //跳转去MV页面时间
     async playMusicMv(id) {
       if (id == "") {
-        return await  this.$message.error("error:获取MV失败，请检查版权...或者网络 ");
+        return await this.$message.error(
+          "error:获取MV失败，请检查版权...或者网络 "
+        );
       } else {
         // 去搜索页 携带数据
         await this.$router.push("/PkayMusicMV?q=" + id);

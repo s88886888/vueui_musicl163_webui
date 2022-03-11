@@ -18,7 +18,7 @@
         <div class="item" v-for="(item, index) in list" :key="index">
           <div class="img-wrap">
             <div class="desc-wrap">
-              <span class="desc">{{ item.copywriter }}</span>
+              <span class="desc">{{item.copywriter}}</span>
             </div>
             <img :src="item.picUrl" alt="" @click="playmusiclist(item.id)" />
             <span class="iconfont icon-play" @click="playmusiclist(item.id)">
@@ -66,14 +66,16 @@
               alt="MV图片"
               @click="playMusicMv(item.id)"
             />
-            <span class="iconfont icon-play"
-              ><i class="el-icon-video-play" @click="playMusicMv(item.id)"></i
-            ></span>
+            <span class="iconfont icon-play">
+              <i class="el-icon-video-play" @click="playMusicMv(item.id)"></i>
+              </span>
+
             <div class="num-wrap">
               <div class="iconfont icon-play"></div>
               <!-- 播放次数 -->
-              <div class="num">{{ item.playCount }}</div>
+              <div class="num"> 播放量:{{item.playCount}}</div>
             </div>
+
           </div>
 
           <div class="info-wrap">
