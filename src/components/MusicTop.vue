@@ -1,15 +1,11 @@
 <template>
   <div class="top-container">
     <div class="left-box">
+      
       <div class="icon-wrapper">
-        <span class="iconfont icon-home"></span>
-        <span class="iconfont icon-sami-select"></span>
-        <span class="iconfont icon-full-screen"></span>
+        <img class="icon-wrapper_img" src="../assets/music.png">
       </div>
-      <div class="history-wrapper">
-        <span class="iconfont icon-arrow-lift"></span>
-        <span class="iconfont icon-arrow-right"></span>
-      </div>
+
     </div>
     <div class="right-box">
       <div class="el-input el-input--small el-input--prefix">
@@ -26,6 +22,10 @@
           <i class="el-input__icon el-icon-search"></i>
         </span>
       </div>
+      <div class="right-box-img">
+       <img  src="../assets/listCover.jpg" alt="">       
+      </div>
+
     </div>
   </div>
 </template>
