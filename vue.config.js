@@ -6,11 +6,6 @@ module.exports = defineConfig({
   //跨域问题
   devServer: {
     proxy: {
-      '/api': {
-        target: '',
-        ws: true,
-        changeOrigin: true,
-      },
       '/': {
         target: 'http://cloud-music.pl-fe.cn/',
         ws: true,
