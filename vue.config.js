@@ -8,7 +8,7 @@ module.exports = defineConfig({
     proxy: {
       '/': {
         target: 'http://cloud-music.pl-fe.cn/',
-        ws: true,
+        ws: false,
         changeOrigin: true,
       }
     }

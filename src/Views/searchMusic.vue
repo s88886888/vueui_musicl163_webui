@@ -248,7 +248,7 @@
       // 去歌单详情页
       toPlaylist(id){
         // 跳转并携带数据即可
-        this.$router.push(`/PkayMusicMV?q=${id}`)
+        this.$router.push(`/PlayMusicList?q=${id}`)
       },
       playMusic(id) {
         axios({
