@@ -13,7 +13,8 @@ Vue.use(ElementUI);
 // 定义一个全局过滤器实现日期格式化
 
 //api 接口
-axios.defaults.baseURL = 'http://cloud-music.pl-fe.cn/'
+// axios.defaults.baseURL = 'http://cloud-music.pl-fe.cn/'
+
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
