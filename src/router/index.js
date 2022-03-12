@@ -6,7 +6,7 @@ import RecommendedMusic from '../Views/RecommendedMusic.vue'
 import LatestMusic from '../Views/LatestMusic.vue'
 import LatestMV from '../Views/LatestMV.vue'
 import PlayMusicList from '../Views/PlayMusicList.vue'
-import PkayMusicMV from '../Views/PkayMusicMV.vue'
+import PkayMusicMV from '../Views/PlayMusicMV.vue'
 import searchMusic from '../Views/searchMusic.vue'
 Vue.use(VueRouter)
 
@@ -37,7 +37,7 @@ const routes = [{
     component: PlayMusicList
   },
   {
-    path: '/PkayMusicMV',
+    path: '/PlayMusicMV',
     component: PkayMusicMV
   },
   {

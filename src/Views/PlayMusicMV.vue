@@ -226,7 +226,6 @@ export default {
         this.hotComments = res.hotComments;
         this.hotCount = res.total;
         this.total = res.total;
-        console.log(res);
       }
     },
 
