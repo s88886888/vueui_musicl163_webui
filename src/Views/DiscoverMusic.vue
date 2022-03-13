@@ -172,7 +172,7 @@ export default {
         );
       } else {
         // 去搜索页 携带数据
-        await this.$router.push("/PkayMusicMV?q=" + id);
+        await this.$router.push("/PlayMusicMV?q=" + id);
       }
     },
     //跳转去歌单页面时间
