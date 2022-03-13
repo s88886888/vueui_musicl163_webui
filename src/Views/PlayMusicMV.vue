@@ -237,7 +237,7 @@ export default {
         );
       } else {
         // 去搜索页 携带数据
-        await this.$router.push("/PkayMusicMV?q=" + id);
+        await this.$router.push("/PlayMusicMV?q=" + id);
          await this.$router.go(0);
       }
     },

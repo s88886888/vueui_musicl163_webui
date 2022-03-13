@@ -8,6 +8,8 @@ import './assets/index.css'
 
 //使用ElementUI饿了么UI
 Vue.use(ElementUI);
+//刷新组件
+// Vue.forceUpdate();
 
 
 // 定义一个全局过滤器实现日期格式化

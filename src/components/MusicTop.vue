@@ -1,11 +1,14 @@
 <template>
   <div class="top-container">
     <div class="left-box">
-      
       <div class="icon-wrapper">
-        <img class="icon-wrapper_img" src="../assets/music.png">
+        <img
+          width="140px"
+          height="45px"
+          class="icon-wrapper_img"
+          src="../assets/music.png"
+        />
       </div>
-
     </div>
     <div class="right-box">
       <div class="el-input el-input--small el-input--prefix">
@@ -23,35 +26,36 @@
         </span>
       </div>
       <div class="right-box-img">
-       <img  src="../assets/listCover.jpg" alt="">       
+        <img src="../assets/listCover.jpg" alt="" />
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'top',
-    data() {
-      return {
-        // 输入的内容
-        inputValue: ''
+export default {
+  name: "top",
+  data() {
+    return {
+      // 输入的内容
+      inputValue: "",
+    };
+  },
+  methods: {
+    async toResult() {
+      // 非空判断
+      if (this.inputValue == "") {
+        // 提示用户
+        this.$message.warning("请输入内容");
+      } else {
+        // 去搜索页 携带数据
+        await this.$router.push("/");
+        await this.$router.push("/searchMusic?q=" + this.inputValue);
+        // await this.$router.go(0);
       }
     },
-    methods: {
-      toResult() {
-        // 非空判断
-        if (this.inputValue == '') {
-          // 提示用户
-          this.$message.warning('请输入内容')
-        }else{
-          // 去搜索页 携带数据
-          this.$router.push('/searchMusic?q='+this.inputValue)
-        }
-      }
-    }
-  }
+  },
+};
 </script>
 
 <style scoped></style>

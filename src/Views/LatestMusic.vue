@@ -39,10 +39,10 @@
             <div class="img-wrap" >
               <img :src="item.album.picUrl" alt="" />
               <!-- 播放按钮 -->
-              <span
+              <!-- <span
                 @click="playMusic(item.id)"
                 class="iconfont icon-play"
-              ></span>
+              ></span> -->
             </div>
           </td>
           <td>

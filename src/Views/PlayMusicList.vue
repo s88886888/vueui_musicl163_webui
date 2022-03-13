@@ -11,6 +11,7 @@
         <div class="author-wrap">
           <!-- 头像 -->
           <img class="avatar" :src="creator.avatarUrl" alt="" />
+
           <span class="name">{{ creator.nickname }}/</span>
           <span class="time">{{ playlist.createTime | filterDatas }}</span>
         </div>
