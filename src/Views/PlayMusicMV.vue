@@ -4,7 +4,8 @@
       <h3 class="title">mv详情</h3>
       <!-- mv -->
       <div class="video-wrap">
-        <video controls :src="url"></video>
+        <!-- //controlsList=“nodownload” 隐藏下载按钮 -->
+        <video  autoplay controls :src="url"></video>
       </div>
       <!-- mv信息 -->
       <div class="info-wrap">

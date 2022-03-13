@@ -20,9 +20,35 @@
           </el-table-column>
           <el-table-column prop="duration" label="时长" width="120">
           </el-table-column>
-          <el-table-column prop="" label="功能"> </el-table-column>
-        </el-table>
+          <el-table-column prop="" label="功能">
+            <template slot-scope="scope">
+              <i
+                v-if="isPay != scope.row.id"
+                class="el-icon-video-play"
+                style="font-size: 22px"
+                @click="playMusic(scope.row.id, scope.row.name)"
+              ></i>
 
+              <i
+                v-else
+                class="el-icon-video-pause"
+                style="font-size: 22px"
+                @click="audioPause()"
+              ></i>
+
+              <i
+                class="el-icon-star-off"
+                style="font-size: 22px"
+                @click="LikeMusic(scope.row.id)"
+              ></i>
+              <i
+                class="el-icon-circle-plus-outline"
+                style="font-size: 22px"
+                @click="MoreMusic(scope.row.id)"
+              ></i>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-tab-pane>
 
       <el-tab-pane label="歌单" name="lists">
@@ -58,12 +84,13 @@
             <div class="img-wrap">
               <!-- 封面 -->
               <img :src="item.cover" alt="" />
-              <span class="iconfont icon-play"></span>
+              <span class="iconfont icon-play"><i class="el-icon-video-play"></i
+              ></span>
 
               <div class="num-wrap">
-                <div class="iconfont icon-play">
+                <!-- <div class="iconfont icon-play">
                   <i class="el-icon-video-play"></i>
-                </div>
+                </div> -->
                 <!-- 播放次数 -->
                 <div class="num">{{ item.playCount }}</div>
               </div>
@@ -98,6 +125,8 @@ export default {
       mv: [],
       // 搜索结果的总数
       count: 0,
+      //判断播放按钮
+      isPay: true,
     };
   },
   // 生命周期钩子 回调函数
@@ -140,6 +169,8 @@ export default {
       });
       if (res.code != 200) {
         return this.$message.error("error:请检查网络 ");
+      } else if (res.msg != null) {
+        return this.$message.error("error:该歌手已经被屏蔽！请理智听歌");
       } else {
         if (type == 1) {
           // 歌曲
@@ -205,24 +236,12 @@ export default {
   methods: {
     // 去mv详情页
     async gotoMusicMv(id) {
-      await this.$router.push(`/mv?q=${id}`);
+      await this.$router.push(`/PlayMusicMV?q=${id}`);
     },
     // 去歌单详情页
     async gotoMusicPlaylist(id) {
       // 跳转并携带数据即可
       await this.$router.push(`/PlayMusicList?q=${id}`);
-    },
-    async playMusic(id) {
-      const { data: res } = await this.$http.get("song/url", {
-        params: { id },
-      });
-
-      if (res.code !== 200) {
-        return this.$message.error("error:请检查网络 ");
-      } else {
-        let url = res.data[0].url;
-        this.$parent.musicUrl = url;
-      }
     },
     async getSearchMusicdata() {
       const { data: res } = await this.$http.get("search", {
@@ -235,8 +254,9 @@ export default {
       });
       if (res.code != 200) {
         return this.$message.error("error:请检查网络 ");
+      } else if (res.msg != null) {
+        return this.$message.error("error:该歌手被屏蔽！请理智听歌");
       } else {
-        console.log(res);
         this.songList = res.result.songs;
 
         //这里没必要自己算，引入moment函数就好了，只是提供一种写法
@@ -255,6 +275,34 @@ export default {
         // 保存总数
         this.count = res.result.songCount;
       }
+    },
+    async playMusic(id, name = null) {
+      this.isPay = id;
+      const { data: res } = await this.$http.get("/song/url?id=" + id);
+      if (res.code !== 200) {
+        return this.$message.error(
+          "error:获取歌曲地址失败，请检查版权...或者网络 "
+        );
+      } else {
+        let url = res.data[0].url;
+        // 设置给父组件的 播放地址
+        // this.$parent.musicUrl = url;
+        this.$parent.audioSrc(url);
+        this.$parent.audioSong(name);
+        this.$parent.audioPlay();
+        // this.nowplay = res.data[0].id;
+      }
+    },
+    //暂停播放
+    async audioPause() {
+      this.isPay = null;
+      await this.$parent.audioPause();
+    },
+    LikeMusic() {
+      return this.$message.warning("warning:该功能待更新，仅提供音乐试听");
+    },
+    MoreMusic() {
+      return this.$message.warning("warning:该功能待更新，仅提供音乐试听");
     },
   },
 };

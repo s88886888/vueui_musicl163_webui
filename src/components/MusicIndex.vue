@@ -1,34 +1,63 @@
 <template>
   <div class="index-container">
     <!-- 导航区域 -->
+
     <div class="nav">
-      <ul>
-        <li>
-          <router-link to="/DiscoverMusic">
-            <span class="iconfont icon-find-music"></span>
-            发现音乐
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/RecommendedMusic">
-            <span class="iconfont icon-music-list"></span>
-            推荐歌单
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/LatestMusic">
-            <span class="iconfont icon-music"></span>
-            最新音乐
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/LatestMV">
-            <span class="iconfont icon-mv"></span>
-            最新MV
-          </router-link>
-        </li>
-      </ul>
+      <el-row class="tac">
+        <el-col :span="12">
+          <el-menu
+            default-active="1"
+            class="nav"
+            active-text-color="#dd6d60"
+            background-color="#ededed"
+          >
+            <el-menu-item index="1">
+              <router-link to="/DiscoverMusic">
+                <span class="el-icon-platform-eleme"></span>
+                发现音乐
+              </router-link>
+            </el-menu-item>
+
+            <el-menu-item index="2">
+              <li>
+                <router-link to="/RecommendedMusic">
+                  <span class="el-icon-present"></span>
+                  推荐歌单
+                </router-link>
+              </li>
+            </el-menu-item>
+            
+            <el-menu-item index="3">
+              <router-link to="/LatestMusic">
+                <span class="el-icon-news"></span>
+                最新音乐
+              </router-link>
+            </el-menu-item>
+
+            <el-menu-item index="4">
+              <router-link to="/LatestMV">
+                <span class="el-icon-video-camera-solid"></span>
+                最新MV
+              </router-link>
+            </el-menu-item>
+
+            <el-submenu index="5">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>我创建的歌单</span>
+              </template>
+              <router-link to="/demo">
+                <el-menu-item-group>
+                  <el-menu-item index="1-1">我收藏的音乐</el-menu-item>
+                  <el-menu-item index="1-2">我的歌单</el-menu-item>
+                </el-menu-item-group>
+              </router-link>
+            </el-submenu>
+          </el-menu>
+        </el-col>
+      </el-row>
     </div>
+
     <!-- 主体区域 -->
     <div class="main">
       <router-view></router-view>
@@ -72,11 +101,12 @@ export default {
     // 一个异步返回单个结果的函数。如果回放成功，Promise就会实现，而play事件也会同时触发，对应执行.then。
     // 如果回放失败，Promise将被拒绝，同时会有一个错误消息解释失败，对应执行.catch。
     async audioPlay() {
-      await this.$refs.audioDom.load();
+      // await this.$refs.audioDom.load();
+      // await this.$refs.audioDom.play();
       let playPromise = this.$refs.audioDom.play();
-    
-       if (playPromise !== undefined) {
-      await  playPromise
+
+      if (playPromise !== undefined) {
+        await playPromise
           .then(() => {
             this.$refs.audioDom.play();
           })

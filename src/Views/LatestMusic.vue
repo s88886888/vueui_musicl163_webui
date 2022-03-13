@@ -33,7 +33,7 @@
         <th>时长</th>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in lists" :key="index" class="el-table__row" @click="playMusic(item.id)">
+        <tr v-for="(item, index) in lists" :key="index" class="el-table__row" @click="playMusic(item.id,item.name)">
           <td>{{ index + 1 }}</td>
           <td>
             <div class="img-wrap" >
@@ -117,14 +117,17 @@ export default {
 
       }
     },
+
+
     // 播放歌曲
-   async playMusic(id) {
+   async playMusic(id,name=null) {
       const { data: res } = await this.$http.get("/song/url?id=" + id);
       if (res.code !== 200) {
         return this.$message.error("error:音乐数据失败 ");
       } else {
         let url = res.data[0].url;
-        this.$parent.musicUrl = url;
+         this.$parent.audioSrc(url);
+        this.$parent.audioSong(name);
       }
     },
   },
