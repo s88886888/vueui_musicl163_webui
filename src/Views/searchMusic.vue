@@ -72,7 +72,7 @@
                 播放量:
                 <span class="num">{{ item.playCount }}</span>
               </div>
-              <img :src="item.coverImgUrl" alt="" />
+              <img :src="item.coverImgUrl" :onerror="errorImage"  alt="" />
               <span class="iconfont icon-play">
                 <i class="el-icon-video-play"></i
               ></span>
@@ -123,6 +123,14 @@
             </div>
           </div>
         </div>
+        <el-pagination
+          @current-change="handleCurrentChangeMusicMV"
+          background
+          layout="prev, pager, next"
+          :total="count"
+          :current-page="MVpage"
+        >
+        </el-pagination>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -132,6 +140,8 @@
 export default {
   data() {
     return {
+      //错误图片
+       errorImage: 'this.src="' + require('../assets/404.jpg') + '"'  ,
       // tab切换时 会改变的数据
       activeIndex: "songs",
       // 保存 查询歌曲
@@ -155,7 +165,7 @@ export default {
 
       MVpage: 1,
       //返回的数据量
-      MVlimit: 10,
+      MVlimit: 8,
     };
   },
   // 生命周期钩子 回调函数
@@ -274,6 +284,12 @@ export default {
       this.MusicListpage = val;
       this.getSearchMusicListdata();
     },
+    async handleCurrentChangeMusicMV(val) {
+      // 保存页面 重新获取数据
+      this.MVpage = val;
+      this.getSearchMusicMVdata();
+    },
+
     // 去mv详情页
     async gotoMusicMv(id) {
       await this.$router.push(`/PlayMusicMV?q=${id}`);
@@ -350,13 +366,14 @@ export default {
           keywords: this.$route.query.q,
           type: 1004,
           // 获取的数据量
-          limit: 10,
-          offset: (this.page - 1) * this.limit,
+          limit: 8,
+          offset: (this.MVpage - 1) * this.MVlimit,
         },
       });
       if (res.code != 200) {
         return this.$message.error("error:请检查网络 ");
       } else {
+        console.log(res);
         // 保存mv数据
         this.mv = res.result.mvs;
         // 总数

@@ -20,6 +20,9 @@
               v-model="loginuserlist.password"
               type="password"
             ></el-input>
+            <span>登入网易云音乐，该接口不会获取隐私数据</span>
+            <span>不登入无法获取完成Api数据！</span>
+            <span>已经登录请忽视，后续再增加判断</span>
           </el-form-item>
         </el-form>
 
@@ -42,16 +45,20 @@ export default {
       },
     };
   },
+  created() {
 
+  },
   methods: {
+
     async getlogin_userid() {
       const { data: res } = await this.$http.post(
         "/login/cellphone?" +
           "phone=" +
           this.loginuserlist.phone +
           "&password=" +
-          this.loginuserlist.password
-      ,{withCredentials: true});
+          this.loginuserlist.password,
+        { withCredentials: true }
+      );
       if (res.code !== 200) {
         return this.$message.error("error:登入失败哦 ");
       } else {
@@ -61,7 +68,7 @@ export default {
         });
 
         window.sessionStorage.setItem("userid", res.account.id);
-           window.sessionStorage.setItem("token", res.token);
+        window.sessionStorage.setItem("token", res.token);
         this.$router.push("/home");
       }
     },
@@ -76,11 +83,11 @@ export default {
 }
 .logbox {
   width: 400px;
-    text-align: center;
-    margin: 0 auto;
+  text-align: center;
+  margin: 0 auto;
   position: absolute;
   top: 50%;
-  left: 32%;
+  left: 45%;
   transform: translate(0, -50%);
 }
 .btnbox {
@@ -93,17 +100,14 @@ export default {
   transform: translate(-50%, -50%);
   top: -5px;
 }
-   .logboximg img {
-    width: 90px;
-    border-radius: 50%;
-    box-shadow: 0 0 10px;
-    background-color: cornsilk;
-  }
+.logboximg img {
+  width: 90px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px;
+  background-color: cornsilk;
+}
 .el-form {
   margin-top: 30px;
   margin-left: 10px;
 }
 </style>
-
-
-

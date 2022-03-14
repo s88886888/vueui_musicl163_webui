@@ -41,14 +41,13 @@
 
             <el-submenu index="5">
               <template slot="title">
-                <i class="el-icon-location"></i>
+                <i class="el-icon-user"></i>
                 <span>我创建的歌单</span>
               </template>
 
               <router-link to="/demo">
                 <el-menu-item-group>
-                  <el-menu-item index="1-1">我收藏的音乐</el-menu-item>
-                  <el-menu-item index="1-2">我的歌单</el-menu-item>
+                  <el-menu-item index="1-1"><i class="el-icon-star-off"></i>我喜欢的音乐</el-menu-item>
                 </el-menu-item-group>
               </router-link>
             </el-submenu>

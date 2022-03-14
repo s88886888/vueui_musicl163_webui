@@ -3,14 +3,14 @@
     <div class="top-wrap">
       <div class="img-wrap">
         <!-- 封面 -->
-        <img :src="playlist.coverImgUrl" alt="" />
+        <img :src="playlist.coverImgUrl" :onerror="errorImage" alt="" />
       </div>
       <div class="info-wrap">
         <!-- 名字 -->
         <p class="title">{{ playlist.name }}</p>
         <div class="author-wrap">
           <!-- 头像 -->
-          <img class="avatar" :src="creator.avatarUrl" alt="" />
+          <img class="avatar" :src="creator.avatarUrl" :onerror="errorImage" alt="" />
 
           <span class="name">{{ creator.nickname }}/</span>
           <span class="time">{{ playlist.createTime | filterDatas }}</span>
@@ -43,7 +43,7 @@
         <el-table :data="tracks" style="width: 100%">
           <el-table-column label="图片" width="180">
             <template slot-scope="scope">
-              <img :src="scope.row.al.picUrl" style="height: 50px" />
+              <img :src="scope.row.al.picUrl" :onerror="errorImage" style="height: 50px" />
             </template>
           </el-table-column>
           <el-table-column prop="name" label="歌曲名称" width="180">
@@ -111,7 +111,7 @@
             <div v-for="(item, index) in hotComment" :key="index" class="item">
               <div class="icon-wrap">
                 <!-- 头像 -->
-                <img :src="item.user.avatarUrl" alt="" />
+                <img :src="item.user.avatarUrl" :onerror="errorImage" alt="" />
               </div>
               <div class="content-wrap">
                 <div class="content">
@@ -141,7 +141,7 @@
           <div class="comments-wrap">
             <div class="item" v-for="(item, index) in comments" :key="index">
               <div class="icon-wrap">
-                <img :src="item.user.avatarUrl" alt="" />
+                <img :src="item.user.avatarUrl" :onerror="errorImage" alt="" />
               </div>
               <div class="content-wrap">
                 <div class="content">
@@ -188,6 +188,8 @@ export default {
 
   data() {
     return {
+      //404图片
+      errorImage: 'this.src="' + require("../assets/404.jpg") + '"',
       tabs: "song",
       // 总条数
       total: 0,
@@ -206,7 +208,7 @@ export default {
       // 普通评论
       comments: [],
       //正在播放
-      isPay:null,
+      isPay: null,
       // playStatus: "play",
       // nowplay: "",
       //  boolui: false,
@@ -222,12 +224,13 @@ export default {
     this.commentplaylist();
   },
   methods: {
-    
     async playlisttrackall() {
       //从发现音乐的页面中 通过playMusic方法的this.$router传递，同时通过this.$router接收
-      const { data: res } = await this.$http.get(("/playlist/detail") ,{params:{
-        id:this.$route.query.q
-      }})
+      const { data: res } = await this.$http.get("/playlist/detail", {
+        params: {
+          id: this.$route.query.q,
+        },
+      });
       if (res.code !== 200) {
         return this.$message.error(
           "error:获取歌单详细失败了，请检查版权...网络404 "
@@ -241,8 +244,9 @@ export default {
 
     // 获取热门评论
     async commenthot() {
-      const { data: res } = await this.$http.get(
-        ("/comment/hot"),{params:{id: this.$route.query.q ,type:2}})
+      const { data: res } = await this.$http.get("/comment/hot", {
+        params: { id: this.$route.query.q, type: 2 },
+      });
       if (res.code !== 200) {
         return this.$message.error(
           "error:获取热门评论失败了，请检查版权...或者网络 "
@@ -271,7 +275,7 @@ export default {
     },
     //播放音乐
     async playMusic(id, name = null) {
-      this.isPay = id
+      this.isPay = id;
 
       const { data: res } = await this.$http.get("/song/url?id=" + id);
       if (res.code !== 200) {
@@ -290,7 +294,7 @@ export default {
     },
     //暂停播放
     async audioPause() {
-      this.isPay = null
+      this.isPay = null;
       await this.$parent.audioPause();
     },
     LikeMusic() {
