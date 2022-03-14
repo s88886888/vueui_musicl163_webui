@@ -49,6 +49,14 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          @current-change="handleCurrentChangeMusic"
+          background
+          layout="prev, pager, next"
+          :total="count"
+          :current-page="page"
+        >
+        </el-pagination>
       </el-tab-pane>
 
       <el-tab-pane label="歌单" name="lists">
@@ -72,6 +80,14 @@
             <p class="name">{{ item.name }}</p>
           </div>
         </div>
+        <el-pagination
+          @current-change="handleCurrentChangeMusicList"
+          background
+          layout="prev, pager, next"
+          :total="count"
+          :current-page="MusicListpage"
+        >
+        </el-pagination>
       </el-tab-pane>
       <el-tab-pane label="MV" name="mv">
         <div class="items mv">
@@ -84,7 +100,8 @@
             <div class="img-wrap">
               <!-- 封面 -->
               <img :src="item.cover" alt="" />
-              <span class="iconfont icon-play"><i class="el-icon-video-play"></i
+              <span class="iconfont icon-play"
+                ><i class="el-icon-video-play"></i
               ></span>
 
               <div class="num-wrap">
@@ -127,6 +144,18 @@ export default {
       count: 0,
       //判断播放按钮
       isPay: true,
+      //页数
+      page: 1,
+      //返回的数据量
+      limit: 10,
+
+      MusicListpage: 1,
+      //返回的数据量
+      MusicListlimit: 10,
+
+      MVpage: 1,
+      //返回的数据量
+      MVlimit: 10,
     };
   },
   // 生命周期钩子 回调函数
@@ -158,13 +187,13 @@ export default {
         default:
           break;
       }
-
       const { data: res } = await this.$http.get("search", {
         params: {
           keywords: this.$route.query.q,
           type, // type:type,
           // 获取的数据量
           limit, // limit: limit}}
+          // offset: (this.page-1) * this.limit
         },
       });
       if (res.code != 200) {
@@ -197,6 +226,7 @@ export default {
           this.playlists = res.result.playlists;
           // 总数
           this.count = res.result.playlistCount;
+
           // 处理 播放次数
           for (let i = 0; i < this.playlists.length; i++) {
             if (this.playlists[i].playCount > 100000) {
@@ -234,6 +264,16 @@ export default {
     },
   },
   methods: {
+    async handleCurrentChangeMusic(val) {
+      // 保存页面 重新获取数据
+      this.page = val;
+      this.getSearchMusicdata();
+    },
+    async handleCurrentChangeMusicList(val) {
+      // 保存页面 重新获取数据
+      this.MusicListpage = val;
+      this.getSearchMusicListdata();
+    },
     // 去mv详情页
     async gotoMusicMv(id) {
       await this.$router.push(`/PlayMusicMV?q=${id}`);
@@ -243,6 +283,7 @@ export default {
       // 跳转并携带数据即可
       await this.$router.push(`/PlayMusicList?q=${id}`);
     },
+
     async getSearchMusicdata() {
       const { data: res } = await this.$http.get("search", {
         params: {
@@ -250,6 +291,7 @@ export default {
           type: 1,
           // 获取的数据量
           limit: 10,
+          offset: (this.page - 1) * this.limit,
         },
       });
       if (res.code != 200) {
@@ -258,7 +300,6 @@ export default {
         return this.$message.error("error:该歌手被屏蔽！请理智听歌");
       } else {
         this.songList = res.result.songs;
-
         //这里没必要自己算，引入moment函数就好了，只是提供一种写法
         // 计算歌曲时间
         for (let i = 0; i < this.songList.length; i++) {
@@ -276,6 +317,73 @@ export default {
         this.count = res.result.songCount;
       }
     },
+
+    async getSearchMusicListdata() {
+      const { data: res } = await this.$http.get("/search", {
+        params: {
+          keywords: this.$route.query.q,
+          type: 1000,
+          // 获取的数据量
+          limit: this.MusicListlimit,
+          offset: (this.MusicListpage - 1) * this.MusicListlimit,
+        },
+      });
+      if (res.code != 200) {
+        return this.$message.error("error:请检查网络 ");
+      } else {
+        // 歌单的逻辑
+        this.playlists = res.result.playlists;
+
+        // 处理 播放次数
+        for (let i = 0; i < this.playlists.length; i++) {
+          if (this.playlists[i].playCount > 100000) {
+            this.playlists[i].playCount =
+              parseInt(this.playlists[i].playCount / 10000) + "万";
+          }
+        }
+      }
+    },
+
+    async getSearchMusicMVdata() {
+      const { data: res } = await this.$http.get("search", {
+        params: {
+          keywords: this.$route.query.q,
+          type: 1004,
+          // 获取的数据量
+          limit: 10,
+          offset: (this.page - 1) * this.limit,
+        },
+      });
+      if (res.code != 200) {
+        return this.$message.error("error:请检查网络 ");
+      } else {
+        // 保存mv数据
+        this.mv = res.result.mvs;
+        // 总数
+        this.count = res.result.mvCount;
+
+        // 处理数据
+        for (let i = 0; i < this.mv.length; i++) {
+          // 时间
+          let min = parseInt(this.mv[i].duration / 1000 / 60);
+          let sec = parseInt((this.mv[i].duration / 1000) % 60);
+          if (min < 10) {
+            min = "0" + min;
+          }
+          if (sec < 10) {
+            sec = "0" + sec;
+          }
+          this.mv[i].duration = min + ":" + sec;
+
+          // 播放次数
+          if (this.mv[i].playCount > 100000) {
+            this.mv[i].playCount =
+              parseInt(this.mv[i].playCount / 10000) + "万";
+          }
+        }
+      }
+    },
+
     async playMusic(id, name = null) {
       this.isPay = id;
       const { data: res } = await this.$http.get("/song/url?id=" + id);

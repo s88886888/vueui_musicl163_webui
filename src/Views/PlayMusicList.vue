@@ -70,7 +70,6 @@
                 style="font-size: 30px"
                 @click="playMusic(scope.row.id)"
               ></i> -->
-
               <i
                 v-if="isPay != scope.row.id"
                 class="el-icon-video-play"
@@ -226,9 +225,9 @@ export default {
     
     async playlisttrackall() {
       //从发现音乐的页面中 通过playMusic方法的this.$router传递，同时通过this.$router接收
-      const { data: res } = await this.$http.get(
-        "/playlist/detail?id=" + this.$route.query.q
-      );
+      const { data: res } = await this.$http.get(("/playlist/detail") ,{params:{
+        id:this.$route.query.q
+      }})
       if (res.code !== 200) {
         return this.$message.error(
           "error:获取歌单详细失败了，请检查版权...网络404 "
@@ -243,8 +242,7 @@ export default {
     // 获取热门评论
     async commenthot() {
       const { data: res } = await this.$http.get(
-        "/comment/hot?id=" + this.$route.query.q + "&type=2"
-      );
+        ("/comment/hot"),{params:{id: this.$route.query.q ,type:2}})
       if (res.code !== 200) {
         return this.$message.error(
           "error:获取热门评论失败了，请检查版权...或者网络 "

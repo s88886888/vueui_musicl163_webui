@@ -10,6 +10,7 @@ module.exports = defineConfig({
         target: 'http://cloud-music.pl-fe.cn/',
         ws: false,
         changeOrigin: true,
+
       }
     }
   }

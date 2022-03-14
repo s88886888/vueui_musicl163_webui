@@ -4,48 +4,47 @@
 
     <div class="nav">
       <el-row class="tac">
-        <el-col :span="12">
+        <el-col :span="20">
           <el-menu
             default-active="1"
             class="nav"
             active-text-color="#dd6d60"
             background-color="#ededed"
+            text-color="#303133"
           >
-            <el-menu-item index="1">
-              <router-link to="/DiscoverMusic">
+            <router-link to="/DiscoverMusic">
+              <el-menu-item index="1">
                 <span class="el-icon-platform-eleme"></span>
                 发现音乐
-              </router-link>
-            </el-menu-item>
-
-            <el-menu-item index="2">
-              <li>
-                <router-link to="/RecommendedMusic">
+              </el-menu-item>
+            </router-link>
+            <router-link to="/RecommendedMusic">
+              <el-menu-item index="2">
+                <li>
                   <span class="el-icon-present"></span>
                   推荐歌单
-                </router-link>
-              </li>
-            </el-menu-item>
-            
-            <el-menu-item index="3">
-              <router-link to="/LatestMusic">
+                </li>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/LatestMusic">
+              <el-menu-item index="3">
                 <span class="el-icon-news"></span>
                 最新音乐
-              </router-link>
-            </el-menu-item>
-
-            <el-menu-item index="4">
-              <router-link to="/LatestMV">
+              </el-menu-item>
+            </router-link>
+            <router-link to="/LatestMV">
+              <el-menu-item index="4">
                 <span class="el-icon-video-camera-solid"></span>
                 最新MV
-              </router-link>
-            </el-menu-item>
+              </el-menu-item>
+            </router-link>
 
             <el-submenu index="5">
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>我创建的歌单</span>
               </template>
+
               <router-link to="/demo">
                 <el-menu-item-group>
                   <el-menu-item index="1-1">我收藏的音乐</el-menu-item>
