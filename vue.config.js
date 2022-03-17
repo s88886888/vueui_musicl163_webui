@@ -1,4 +1,6 @@
-const { defineConfig} = require('@vue/cli-service')
+const {
+  defineConfig
+} = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: false,
   //关闭严格模式
@@ -6,12 +8,15 @@ module.exports = defineConfig({
   //跨域问题
   devServer: {
     proxy: {
-      '/': {
-        target: 'http://cloud-music.pl-fe.cn/',
-        ws: false,
+      '/api': {
+        target: 'http://localhost:4000/',
         changeOrigin: true,
-
+        ws: false,
+        pathRewrite: {
+          '^/api': '' //重写,
+        }
       }
+
     }
   }
 })
