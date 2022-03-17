@@ -18,7 +18,7 @@
         <div class="item" v-for="(item, index) in list" :key="index">
           <div class="img-wrap">
             <div class="desc-wrap">
-              <span class="desc">{{item.copywriter}}</span>
+              <span class="desc">{{ item.copywriter }}</span>
             </div>
             <img :src="item.picUrl" alt="" @click="playmusiclist(item.id)" />
             <span class="iconfont icon-play" @click="playmusiclist(item.id)">
@@ -68,14 +68,13 @@
             />
             <span class="iconfont icon-play">
               <i class="el-icon-video-play" @click="playMusicMv(item.id)"></i>
-              </span>
+            </span>
 
             <div class="num-wrap">
               <div class="iconfont icon-play"></div>
               <!-- 播放次数 -->
-              <div class="num"> 播放量:{{item.playCount}}</div>
+              <div class="num">播放量:{{ item.playCount }}</div>
             </div>
-
           </div>
 
           <div class="info-wrap">
@@ -91,7 +90,6 @@
 </template>
 
 <script>
-// 导入 axios
 export default {
   data() {
     return {
@@ -114,7 +112,10 @@ export default {
   methods: {
     async banner() {
       // 轮播图接口
-      const { data: res } = await this.$http.get("/banner");
+      const { data: res } = await this.$http.get("/banner", {
+        responseType: "json",
+        withCredentials: true,
+      });
       if (res.code !== 200) {
         return this.$message.error("error:轮播图数据获取失败 ");
       } else {

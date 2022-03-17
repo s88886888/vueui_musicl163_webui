@@ -10,9 +10,36 @@ Vue.use(ElementUI);
 //封装axios
 Vue.prototype.$http = axios
 //让ajax携带cookie
+axios.defaults.baseURL = '/api';
 axios.defaults.withCredentials = true
-// axios.defaults.baseURL = "http://cloud-music.pl-fe.cn/";
+
+//添加拦截器，防止状态码 304
+axios.interceptors.request.use(
+
+      
+      //axios 拦截器统一在接口增加时间戳参数，防止走缓存。
+      config => {
+            if (config.method == 'post') {
+                  config.data = {
+                        ...config.data,
+                        _t: Date.parse(new Date()) / 1000
+                  }
+            } else if (config.method == 'get') {
+                  config.params = {
+                        _t: Date.parse(new Date()) / 1000,
+                        ...config.params
+                  }
+            }
+            return config
+      },
+      function (error) {
+            return Promise.reject(error)
+      }
+)
+
 Vue.config.productionTip = false
+
+
 new Vue({
       router,
       render: h => h(App)
