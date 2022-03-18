@@ -1,24 +1,24 @@
 
 #Vue 版仿网易云音乐，
 
-项目预览
+#项目预览
 
-软件架构
+#软件架构
 后端使用NeteaseCloudMusicApi进行反向代理
 
-数据来源于网易云音乐接口
+#数据来源于网易云音乐接口
 
 #使用技术
-vue2.6.11
-vue-router3.1.5
-axios0.19.2
-element-ui2.13.0
+vue
+vue-router
+axios
+element-ui
+
 
 ```shell
 npm install
-```shell
 npm run serve
-
+```
 
 
 
