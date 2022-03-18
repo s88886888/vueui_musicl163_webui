@@ -47,7 +47,9 @@
 
               <router-link to="/demo">
                 <el-menu-item-group>
-                  <el-menu-item index="1-1"><i class="el-icon-star-off"></i>我喜欢的音乐</el-menu-item>
+                  <el-menu-item index="1-1"
+                    ><i class="el-icon-star-off"></i>我喜欢的音乐</el-menu-item
+                  >
                 </el-menu-item-group>
               </router-link>
             </el-submenu>
@@ -87,6 +89,9 @@ export default {
       musicUrl: "",
       singsong: "",
     };
+  },
+
+  async created() {
   },
   methods: {
     //暂停

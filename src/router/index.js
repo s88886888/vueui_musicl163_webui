@@ -45,7 +45,7 @@ const routes = [{
     component: ()=>import('../Views/searchMusic.vue'),
   },
   {
-    path: '/logn',
+    path: '/logon',
     component: ()=>import('../components/demo.vue'),
   }
 ]

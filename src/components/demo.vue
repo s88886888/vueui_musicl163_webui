@@ -45,20 +45,13 @@ export default {
       },
     };
   },
-  created() {
-
-  },
+  created() {},
   methods: {
-
     async getlogin_userid() {
-      const { data: res } = await this.$http.post(
-        "/login/cellphone?" +
-          "phone=" +
-          this.loginuserlist.phone +
-          "&password=" +
-          this.loginuserlist.password,
-        { withCredentials: true }
-      );
+      const { data: res } = await this.$http.post("/login/cellphone", {
+        phone: this.loginuserlist.phone,
+        password: this.loginuserlist.password,
+      });
       if (res.code !== 200) {
         return this.$message.error("error:登入失败哦 ");
       } else {
@@ -66,10 +59,10 @@ export default {
           message: "success:登入成功",
           type: "success",
         });
-
         window.sessionStorage.setItem("userid", res.account.id);
         window.sessionStorage.setItem("token", res.token);
-        this.$router.push("/home");
+        this.$router.push("/");
+        this.$router.push("/DiscoverMusic");
       }
     },
   },

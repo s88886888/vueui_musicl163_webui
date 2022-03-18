@@ -108,6 +108,8 @@ export default {
     this.personalized();
     this.newsong();
     this.personalizedMv();
+    //判断登录
+    this.isLogon();
   },
   methods: {
     async banner() {
@@ -186,6 +188,17 @@ export default {
         // 去搜索页 携带数据
         await this.$router.push("/PlayMusicList?q=" + id);
       }
+    },
+    isLogon() {
+      let userid = sessionStorage.getItem("userid");
+      let token = sessionStorage.getItem("token");
+      if (userid != null && token != null) {
+       
+      }else
+      {
+
+      }
+
     },
   },
 };

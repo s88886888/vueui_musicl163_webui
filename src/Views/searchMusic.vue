@@ -373,7 +373,6 @@ export default {
       if (res.code != 200) {
         return this.$message.error("error:请检查网络 ");
       } else {
-        console.log(res);
         // 保存mv数据
         this.mv = res.result.mvs;
         // 总数

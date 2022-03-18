@@ -8,11 +8,13 @@ module.exports = defineConfig({
   //跨域问题
   devServer: {
     open: true, //是否自动弹出浏览器页面
-    port: '80',
+    host:"localhost",
+    port: '8080',
     https: false, //是否使用https协议
     proxy: {
       '/': {
         target: 'http://cloud-music.pl-fe.cn/',
+        ws:false,
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
