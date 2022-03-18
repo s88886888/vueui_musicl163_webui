@@ -7,16 +7,17 @@ module.exports = defineConfig({
   lintOnSave: false,
   //跨域问题
   devServer: {
+    open: true, //是否自动弹出浏览器页面
+    port: '80',
+    https: false, //是否使用https协议
     proxy: {
-      '/api': {
-        target: 'http://localhost:4000/',
+      '/': {
+        target: 'http://cloud-music.pl-fe.cn/',
         changeOrigin: true,
-        ws: false,
         pathRewrite: {
-          '^/api': '' //重写,
-        }
+          '^/api': ''
+        },
       }
-
     }
   }
 })

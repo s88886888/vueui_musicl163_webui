@@ -13,36 +13,40 @@ Vue.use(VueRouter)
 const routes = [{
     path: '/',
     name: "home",
-    component: demo
+    component: ()=>import('../Views/DiscoverMusic.vue'),
 
   },
   {
     path: '/DiscoverMusic',
-    component: DiscoverMusic
+    component: ()=>import('../Views/DiscoverMusic.vue'),
   },
   {
     path: '/RecommendedMusic',
-    component: RecommendedMusic
+    component: ()=>import('../Views/RecommendedMusic.vue'),
   },
   {
     path: '/LatestMusic',
-    component: LatestMusic
+    component: ()=>import('../Views/LatestMusic.vue'),
   },
   {
     path: '/LatestMV',
-    component: LatestMV
+    component: ()=>import('../Views/LatestMV.vue'),
   },
   {
     path: '/PlayMusicList',
-    component: PlayMusicList
+    component: ()=>import('../Views/PlayMusicList.vue'),
   },
   {
     path: '/PlayMusicMV',
-    component: PlayMusicMV
+    component: ()=>import('../Views/PlayMusicMV.vue'),
   },
   {
     path: '/searchMusic',
-    component: searchMusic
+    component: ()=>import('../Views/searchMusic.vue'),
+  },
+  {
+    path: '/logn',
+    component: ()=>import('../components/demo.vue'),
   }
 ]
 const router = new VueRouter({
