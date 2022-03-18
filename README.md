@@ -22,7 +22,6 @@ npm run serve
 
 
 
-
 # 网易云音乐 API
 
 ## 环境要求
@@ -69,7 +68,5 @@ $ set PORT=4000 && node app.js
 [文档地址](https://binaryify.github.io/NeteaseCloudMusicApi) 
 
 [文档地址2](https://neteasecloudmusicapi.vercel.app)
-
-![文档](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/docs.png)
 
 
