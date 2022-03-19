@@ -12,7 +12,6 @@ module.exports = defineConfig({
     host: '0.0.0.0',
     port: '8080',
     https: false, //是否使用https协议
-    hotOnly:false,
     proxy: {
       '/api': {
         target: 'http://cloud-music.pl-fe.cn/',
