@@ -1236,7 +1236,20 @@ ol {
   background-color: #ededed;
   width: 200px;
   height: 100%;
+
+  
+
 }
+@media (max-width: 600px) {
+
+  .nav {
+
+    
+  display: none;
+  }
+
+}
+   
 
 /* .index-container .nav li {
   height: 60px;
