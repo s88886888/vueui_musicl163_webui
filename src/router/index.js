@@ -11,45 +11,86 @@ import searchMusic from '../Views/searchMusic.vue'
 Vue.use(VueRouter)
 
 const routes = [{
+
     path: '/',
-    name: "home",
-    component: ()=>import('../Views/DiscoverMusic.vue'),
+    component: () => import('../Views/DiscoverMusic.vue'),
 
   },
   {
     path: '/DiscoverMusic',
-    component: ()=>import('../Views/DiscoverMusic.vue'),
+    component: () => import('../Views/DiscoverMusic.vue'),
   },
   {
     path: '/RecommendedMusic',
-    component: ()=>import('../Views/RecommendedMusic.vue'),
+    component: () => import('../Views/RecommendedMusic.vue'),
   },
   {
     path: '/LatestMusic',
-    component: ()=>import('../Views/LatestMusic.vue'),
+    component: () => import('../Views/LatestMusic.vue'),
   },
   {
     path: '/LatestMV',
-    component: ()=>import('../Views/LatestMV.vue'),
+    component: () => import('../Views/LatestMV.vue'),
   },
   {
     path: '/PlayMusicList',
-    component: ()=>import('../Views/PlayMusicList.vue'),
+    component: () => import('../Views/PlayMusicList.vue'),
   },
   {
     path: '/PlayMusicMV',
-    component: ()=>import('../Views/PlayMusicMV.vue'),
+    component: () => import('../Views/PlayMusicMV.vue'),
   },
   {
     path: '/searchMusic',
-    component: ()=>import('../Views/searchMusic.vue'),
+    component: () => import('../Views/searchMusic.vue'),
   },
   {
     path: '/logon',
-    component: ()=>import('../components/demo.vue'),
+    component: () => import('../components/demo.vue'),
+  },
+  {
+    path: '/myLikeMusic',
+    component: () => import('../Views/myLikeMusic.vue'),
+  },
+  {
+    path: '/myMusic',
+    component: () => import('../Views/myMusic.vue'),
   }
+
+
+
+
+
 ]
 const router = new VueRouter({
   routes
 })
+
+//挂载路由导航守卫
+router.beforeEach((to, from, next) => {
+  //to 将要访问的路径
+  //from 从那个路径跳转过来
+  //next 示放行
+
+  if (to.path == '/DiscoverMusic') return next();
+  if (to.path == '/RecommendedMusic') return next();
+  if (to.path == '/LatestMusic') return next();
+  if (to.path == '/LatestMV') return next();
+  if (to.path == '/PlayMusicList') return next();
+  if (to.path == '/PlayMusicMV') return next();
+  if (to.path == '/searchMusic') return next();
+
+  if (to.path == '/logon') return next();
+
+  // 获取id
+  const id = window.sessionStorage.getItem('userid');
+  
+  //如果没有id 回到登入
+  if (!id) return next('/logon');
+
+  //放行
+  next();
+
+})
+
 export default router

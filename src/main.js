@@ -9,9 +9,11 @@ import './assets/index.css'
 Vue.use(ElementUI);
 //封装axios
 Vue.prototype.$http = axios
-//让ajax携带cookie
-axios.defaults.baseURL = 'http://cloud-music.pl-fe.cn/'
 
+// 创建实例时配置默认值
+axios.defaults.baseURL = '/api'
+
+//让ajax携带cookie
 axios.defaults.withCredentials = true
 
 //添加拦截器，防止状态码 304
